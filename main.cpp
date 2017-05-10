@@ -72,7 +72,10 @@ int main(){
 			cout << "Press 1 to save file 0 to exit : ";
 			cin >> isSave;
 			if(isSave==1){
-				file1.write("output.csv");
+				string name;
+				cout << "Enter file name with .csv extension by which you want to save file : ";
+				cin >> name;
+				file1.write("name");
 			}
 		break;
 	}
