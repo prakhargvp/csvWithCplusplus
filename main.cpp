@@ -1,11 +1,5 @@
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <errno.h>
-#include <cstring>
+#include <bits/stdc++.h>
 #include "csv.h"
-using namespace std;
 int main(){
 
 	int option;
@@ -74,7 +68,7 @@ int main(){
 			if(isSave==1){
 				string name;
 				cout << "Enter file name with .csv extension by which you want to save file : ";
-				cin >> name;
+				getline(cin,name);
 				file1.write("name");
 			}
 		break;
