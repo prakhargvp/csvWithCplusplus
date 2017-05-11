@@ -28,7 +28,37 @@ public:
 	}
 	// Utility Function
 	// isExist : To check if file already exist or not
-	static bool isExist(string name){
+	static bool isExist(string name);	
+	// error : Display the Standard error
+	void error();
+	void close();
+	// open : TO open the given file
+	// return true if all going well
+	// return false if any error
+	bool open(string name);
+	// getRecord : return total records
+	int getRecord();	
+	// read : to read the file and create a dataset
+	// return records
+	vector<col> read(int rec=0);
+	int totalColumn();
+	// getColumn : Get the Column Name
+	void getColumn();
+	// addColumn : Add Column in CSV File
+	// return the Column index
+	int addColumn(string colName);
+	// write : write the dataset in file
+	void write(string name="");
+	// sort
+	void sort(int colNum);	
+	void print();
+	~CSV(){
+		close();
+	}	
+};
+	// Utility Function
+	// isExist : To check if file already exist or not
+	bool CSV::isExist(string name){
 		if(ifstream(name.c_str())){
 			//File already exists
 			return true;
@@ -38,16 +68,16 @@ public:
 		}		
 	}
 	// error : Display the Standard error
-	void error(){
+	void CSV::error(){
 		cerr << "Error: " << strerror(errno)<<endl;
 	}
-	void close(){
+	void CSV::close(){
 		file.close();	
 	}
 	// open : TO open the given file
 	// return true if all going well
 	// return false if any error
-	bool open(string name){
+	bool CSV::open(string name){
 		bool fStatus;
 		fname = name;
 		if(!file.is_open())
@@ -65,12 +95,12 @@ public:
 		return fStatus;
 	}
 	// getRecord : return total records
-	int getRecord(){
+	int CSV::getRecord(){
 		return records;
 	}	
 	// read : to read the file and create a dataset
 	// return records
-	vector<col> read(int rec=0){
+	vector<col> CSV::read(int rec){
 	  // rec = 0 means fetch all the records
 	  int i=0;
 	  bool fetchAll = false;
@@ -105,11 +135,11 @@ public:
 	  }
 	  return data;
 	}
-	int totalColumn(){
+	int CSV::totalColumn(){
 		return columns;
 	}
 	// getColumn : Get the Column Name
-	void getColumn(){
+	void CSV::getColumn(){
 		if(records>-1){
 			for(int  i=0;i<data[0].d.size();i++){
 				cout <<"| "<< data[0].d[i]<<" ";
@@ -120,7 +150,7 @@ public:
 	}
 	// addColumn : Add Column in CSV File
 	// return the Column index
-	int addColumn(string colName){
+	int CSV::addColumn(string colName){
 		file.seekg(0,ios::beg);
 		if(records==-1){
 			col firstLine;
@@ -134,7 +164,7 @@ public:
 		columns++;
 	}
 	// write : write the dataset in file
-	void write(string name=""){
+	void CSV::write(string name){
 		if(name==""){
 			name = fname;
 		}
@@ -159,11 +189,11 @@ public:
 		}
 	}	
 	// sort
-	void sort(int colNum){
+	void CSV::sort(int colNum){
 		std::sort(data.begin()+1,data.end(),acompare(colNum));
 
 	}
-	void print(){
+	void CSV::print(){
 	  for(int i=0;i<data.size();i++){
 		for(int j=0;j<data[i].d.size();j++){
 			cout << data[i].d[j] << " ";
@@ -171,8 +201,3 @@ public:
 		cout << endl;
 	  }
 	}
-
-	~CSV(){
-		close();
-	}	
-};
