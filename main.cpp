@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "csv.h"
+string inputFile();
 int main(){
 
 	int option;
@@ -19,26 +20,9 @@ int main(){
 	cin >> option;
 	switch(option){
 		case 1:
-			int errChoice=1;
-			do{
-				cout << "Enter the File Name : ";
-				cin >> file;
-				// Check the File Status is already exist or not
-				// a. If file already exist ask to open
-				// b. If file not exist ask for create
-				if(CSV::isExist(file)){
-					cout << "File Already Exist "<<endl;
-					cout << "1. Open ; 2. New File Name ; 3. Exit"<<endl;
-
-				}else{
-					cout << "File Not Exist " <<endl;
-					cout << "1. Create ; 2. New File Name ; 3. Exit"<<endl; 
-				}
-				cout << "Enter Choice : ";
-				cin >> errChoice;
-			}while(errChoice==2);
+			file = inputFile();
 			// If user select to exit
-			if(errChoice==3)
+			if(file=="")
 				break;
 			// Opent the FIle
 			if(!file1.open(file)){
@@ -46,10 +30,9 @@ int main(){
 				break;
 			}
 			// To read the file
-			//file1.read();
+			file1.read();
 			cout << "Total Records : " << file1.getRecord() << endl;
 			// Add Column Name in csv File
-			string colName;
 			do{
 				// Display Columns in DataSet = Columns in File + Other Added
 				cout << "Columns : ";
@@ -69,8 +52,8 @@ int main(){
 				cin >> isSave;
 				if(isSave==2){
 					string name;
-					cout << "Enter file name with .csv extension by which you want to save file : ";
-					getline(cin,name);		
+					cout << "Enter file name (with .csv extension) : ";
+					cin >> name;
 					file1.write(name);			
 				}else{
 					file1.write();	
@@ -78,6 +61,69 @@ int main(){
 				
 			}
 		break;
+		case 2:
+			// IsSameStructure
+			do{
+				file = inputFile();
+			}while(file!="");
+		break;
+		case 4:
+			// Sort the data-set
+			// Input File
+			file = inputFile();
+			if(file==""){	break;	}
+			// Open the File
+			if(!file1.open(file)){
+				file1.error();
+				break;
+			}
+			// Read the File
+			file1.read();
+				int totalColumn = file1.totalColumn();
+				cout << "Total Records : " << file1.getRecord() << endl;
+				cout << "Total Columns : " << file1.totalColumn() << endl;
+				cout << "Columns : ";	file1.getColumn();	
+				int colNum,count=0;
+				do{	
+					cout << "Enter the Column number (-1 => exit): ";
+					cin >> colNum;
+					if(colNum>totalColumn && colNum<-1){
+						cout << "Please enter within Range (0-"<<totalColumn<<")"<<endl;
+					}
+					count++;
+				}while(colNum!=-1 && count<=totalColumn);
+		break;
 	}
 return 0;
+}
+string inputFile(){
+	int errChoice=1;
+	string file;
+	do{
+		cout << "Enter the File Name (-1 => exit): ";
+		cin >> file;
+		if(file=="-1"){
+			file = "";
+			break;
+		}else if(file==""){
+			continue;
+		}
+		// Check the File Status is already exist or not
+		// a. If file already exist ask to open
+		// b. If file not exist ask for create
+		if(CSV::isExist(file)){
+			cout << "File Already Exist "<<endl;
+			cout << "1. Open ; 2. New File Name ; 3. Exit"<<endl;
+
+		}else{
+			cout << "File Not Exist " <<endl;
+			cout << "1. Create ; 2. New File Name ; 3. Exit"<<endl; 
+		}
+		cout << "Enter Choice : ";
+		cin >> errChoice;
+	}while(errChoice==2);
+	if(errChoice==3){
+		file = "";
+	}
+return file;
 }

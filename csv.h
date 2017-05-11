@@ -12,11 +12,13 @@ class CSV{
 	fstream file;
 	string fname;
 	int records;
+	int columns;
 	vector <col> data;
 public:
 	CSV(string name=""){
 		records = -1;
 		fname = name;
+		columns = 0;
 	}
 	// Utility Function
 	// isExist : To check if file already exist or not
@@ -79,13 +81,15 @@ public:
 
 	    istringstream ss( s );
 	    vector<col> record;
-
+	    columns = 0;
 	    col s1;
 	    while (ss)
 	    {
 	      string s;
 	      if (!getline( ss, s, ',' )) break;
 	      s1.d.push_back(s);
+	      // Count Columns
+	      columns++;
 	    }
 	    data.push_back(s1);
 	    // Increment Record by 1
@@ -94,6 +98,9 @@ public:
 	    i++;
 	  }
 	  return data;
+	}
+	int totalColumn(){
+		return columns;
 	}
 	// getColumn : Get the Column Name
 	void getColumn(){
@@ -118,7 +125,7 @@ public:
 			records++;
 		}
 		data[0].d.push_back(colName);	
-
+		columns++;
 	}
 	// write : write the dataset in file
 	void write(string name=""){
