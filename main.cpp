@@ -1,11 +1,5 @@
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <errno.h>
-#include <cstring>
+#include <bits/stdc++.h>
 #include "csv.h"
-using namespace std;
 int main(){
 
 	int option;
@@ -71,7 +65,17 @@ int main(){
 			cout << "Press 1 to save file 0 to exit : ";
 			cin >> isSave;
 			if(isSave==1){
-				file1.write();
+				cout << "Press 1. To save in existing one; 2. To Save in new one : ";
+				cin >> isSave;
+				if(isSave==2){
+					string name;
+					cout << "Enter file name with .csv extension by which you want to save file : ";
+					getline(cin,name);		
+					file1.write(name);			
+				}else{
+					file1.write();	
+				}
+				
 			}
 		break;
 	}
