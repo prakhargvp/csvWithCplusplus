@@ -4,14 +4,29 @@
 #include <vector>
 #include <errno.h>
 #include <cstring>
+#include <string>  
 using namespace std;
 struct col{
 	vector<string> d;
 };
 struct acompare{
-	acompare(int colNum){this->colNum = colNum;}
-	bool operator () (col lhs, col rhs){return lhs.d[colNum] < rhs.d[colNum];}
-	int colNum;
+	acompare(int colNum,int sType){
+		this->colNum = colNum;
+		this->sType = sType;
+	}
+	bool operator () (col lhs, col rhs){
+		string str1,str2;
+		str1 = lhs.d[colNum];
+		str2 = rhs.d[colNum];
+		// 0 => int
+		// 1 => Ascii
+		if(sType==0){
+			return stoi(str1) < stoi(str2);
+		}else{
+			return str1 < str2;
+		}
+	}
+	int colNum,sType;
 };
 //bool acompare(col lhs, col rhs) { return lhs.d[0] < rhs.d[0]; }
 class CSV{
@@ -40,7 +55,7 @@ public:
 	int getRecord();	
 	// read : to read the file and create a dataset
 	// return records
-	vector<col> read(int rec=0);
+	vector<col> read(int );
 	int totalColumn();
 	// getColumn : Get the Column Name
 	void getColumn();
@@ -50,7 +65,7 @@ public:
 	// write : write the dataset in file
 	void write(string name="");
 	// sort
-	void sort(int colNum);	
+	void sort(int colNum,int sortType);	
 	void print();
 	~CSV(){
 		close();
@@ -100,7 +115,7 @@ public:
 	}	
 	// read : to read the file and create a dataset
 	// return records
-	vector<col> CSV::read(int rec){
+	vector<col> CSV::read(int rec=0){
 	  // rec = 0 means fetch all the records
 	  int i=0;
 	  bool fetchAll = false;
@@ -189,8 +204,8 @@ public:
 		}
 	}	
 	// sort
-	void CSV::sort(int colNum){
-		std::sort(data.begin()+1,data.end(),acompare(colNum));
+	void CSV::sort(int colNum, int sortType){
+		std::sort(data.begin()+1,data.end(),acompare(colNum,sortType));
 
 	}
 	void CSV::print(){

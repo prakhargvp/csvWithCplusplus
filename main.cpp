@@ -90,7 +90,12 @@ int main(){
 					if(colNum>totalColumn && colNum<-1){
 						cout << "Please enter within Range (0-"<<totalColumn<<")"<<endl;
 					}else{
-						file1.sort(colNum);
+						int sortType;
+						do{
+							cout << "Enter the Sort type (0 => int , 1 => string) : ";
+							cin >> sortType;
+						}while(sortType!=0 && sortType!=1);
+						file1.sort(colNum,sortType);
 						file1.print();
 					}
 					count++;
