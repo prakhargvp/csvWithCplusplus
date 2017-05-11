@@ -67,7 +67,7 @@ int main(){
 				file = inputFile();
 			}while(file!="");
 		break;
-		case 4:
+		case 5:
 			// Sort the data-set
 			// Input File
 			file = inputFile();
@@ -89,6 +89,9 @@ int main(){
 					cin >> colNum;
 					if(colNum>totalColumn && colNum<-1){
 						cout << "Please enter within Range (0-"<<totalColumn<<")"<<endl;
+					}else{
+						file1.sort(colNum);
+						file1.print();
 					}
 					count++;
 				}while(colNum!=-1 && count<=totalColumn);

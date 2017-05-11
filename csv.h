@@ -8,6 +8,12 @@ using namespace std;
 struct col{
 	vector<string> d;
 };
+struct acompare{
+	acompare(int colNum){this->colNum = colNum;}
+	bool operator () (col lhs, col rhs){return lhs.d[colNum] < rhs.d[colNum];}
+	int colNum;
+};
+//bool acompare(col lhs, col rhs) { return lhs.d[0] < rhs.d[0]; }
 class CSV{
 	fstream file;
 	string fname;
@@ -152,6 +158,20 @@ public:
 			error();
 		}
 	}	
+	// sort
+	void sort(int colNum){
+		std::sort(data.begin()+1,data.end(),acompare(colNum));
+
+	}
+	void print(){
+	  for(int i=0;i<data.size();i++){
+		for(int j=0;j<data[i].d.size();j++){
+			cout << data[i].d[j] << " ";
+		}
+		cout << endl;
+	  }
+	}
+
 	~CSV(){
 		close();
 	}	
