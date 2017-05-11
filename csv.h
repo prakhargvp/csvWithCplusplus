@@ -33,6 +33,9 @@ public:
 	void error(){
 		cerr << "Error: " << strerror(errno)<<endl;
 	}
+	void close(){
+		file.close();	
+	}
 	// open : TO open the given file
 	// return true if all going well
 	// return false if any error
@@ -64,7 +67,7 @@ public:
 	  int i=0;
 	  bool fetchAll = false;
 	  if(rec==0){
-	  	records = 0;
+	  	records = -1;
 	  	fetchAll = true;
 	  }
 	  //
@@ -94,16 +97,28 @@ public:
 	}
 	// getColumn : Get the Column Name
 	void getColumn(){
-		for(int  i=0;i<data[0].d.size();i++){
-			cout <<"| "<< data[0].d[i]<<" ";
+		if(records>-1){
+			for(int  i=0;i<data[0].d.size();i++){
+				cout <<"| "<< data[0].d[i]<<" ";
+			}
+			cout <<"|";
 		}
-		cout <<"|"<< endl;
+		cout<<endl;
 	}
 	// addColumn : Add Column in CSV File
 	// return the Column index
 	int addColumn(string colName){
 		file.seekg(0,ios::beg);
-		data[0].d.push_back(colName);		
+		if(records==-1){
+			col firstLine;
+			data.push_back(firstLine);
+			// increment the record to be -1 to 0
+			// -1 means file is empty
+			// 0 means header is available but no record
+			records++;
+		}
+		data[0].d.push_back(colName);	
+
 	}
 	// write : write the dataset in file
 	void write(string name=""){
@@ -120,12 +135,17 @@ public:
 				}
 				fout << data[i].d[j];
 			}
-			fout << endl;
+			// Don't end new line in last record
+			if(i < data.size()-1){
+				fout << endl;
+			}
 	  	}
 			fout.close();
 		}else{
 			error();
 		}
 	}	
-
+	~CSV(){
+		close();
+	}	
 };

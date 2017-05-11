@@ -52,8 +52,8 @@ int main(){
 				break;
 			}
 			// To read the file
-			file1.read();
-			cout << "Total Records : " << file1.getRecord() <<endl;
+			//file1.read();
+			cout << "Total Records : " << file1.getRecord() << endl;
 			// Add Column Name in csv File
 			string colName;
 			do{
@@ -64,7 +64,6 @@ int main(){
 				cout << "Enter Column Name (-1 => exit): ";
 				cin >> colName;
 				if(colName!="-1"){
-					// Check is column name already exist
 					file1.addColumn(colName);
 				}
 			}while(colName!="-1");
@@ -72,7 +71,7 @@ int main(){
 			cout << "Press 1 to save file 0 to exit : ";
 			cin >> isSave;
 			if(isSave==1){
-				file1.write("output.csv");
+				file1.write();
 			}
 		break;
 	}
