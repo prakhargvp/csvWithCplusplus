@@ -2,7 +2,7 @@
 #include "csv.h"
 #include "fun.h"
 int main(){
-	int option;
+	int option,flag;
 	string file,colName;
 	CSV file1,file2,file3;
 	int caseS,dupInfo,isSave;
@@ -12,7 +12,7 @@ int main(){
 	string str;
 	// Menus
 	cout <<"Menus : "<<endl;
-	cout <<"1. Add Column"<<endl;
+	cout <<"1. Create"<<endl;
 	cout <<"2. IsSameStructure"<<endl;
 	cout <<"3. IsDuplicate"<<endl;
 	cout <<"4. RemoveDuplicate"<<endl;
