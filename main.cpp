@@ -5,7 +5,7 @@ int main(){
 
 	int option;
 	string file,colName;
-	CSV file1;
+	CSV file1,file2;
 	// Menus
 	cout <<"Menus : "<<endl;
 	cout <<"1. Add Column"<<endl;
@@ -36,7 +36,7 @@ int main(){
 			do{
 				// Display Columns in DataSet = Columns in File + Other Added
 				cout << "Columns : ";
-				file1.getColumn();
+				file1.printColumn();
 
 				cout << "Enter Column Name (-1 => exit): ";
 				cin >> colName;
@@ -61,12 +61,6 @@ int main(){
 				
 			}
 		break;
-		case 2:
-			// IsSameStructure
-			do{
-				file = inputFile();
-			}while(file!="");
-		break;
 		case 5:
 			// Sort the data-set
 			// Input File
@@ -79,16 +73,18 @@ int main(){
 			}
 			// Read the File
 			file1.read();
-				int totalColumn = file1.totalColumn();
+				int tColumn;
+				int colNum,count;
+				count = 0;
+				tColumn= file1.totalColumn();
 				cout << "Total Records : " << file1.getRecord() << endl;
-				cout << "Total Columns : " << file1.totalColumn() << endl;
-				cout << "Columns : ";	file1.getColumn();	
-				int colNum,count=0;
+				cout << "Total Columns : " << tColumn << endl;
+				cout << "Columns : ";	file1.printColumn();	
 				do{	
 					cout << "Enter the Column number (-1 => exit): ";
 					cin >> colNum;
-					if(colNum>totalColumn && colNum<-1){
-						cout << "Please enter within Range (0-"<<totalColumn<<")"<<endl;
+					if(colNum>tColumn && colNum<-1){
+						cout << "Please enter within Range (0-"<<tColumn<<")"<<endl;
 					}else{
 						int sortType;
 						do{
@@ -99,7 +95,53 @@ int main(){
 						file1.print();
 					}
 					count++;
-				}while(colNum!=-1 || count<=totalColumn);
+				}while(colNum!=-1 || count<=tColumn);
+		break;
+		case 2:
+			// IsSameStructure
+			string f1,f2;
+			int caseS;
+
+			f1 = inputFile();
+			f2 = inputFile();
+			file1.open(f1);
+			file2.open(f2);
+			file1.read();
+			file2.read();
+			cout << "File1 Columns : "; file1.printColumn();		
+			cout << "File2 Columns : "; file2.printColumn();
+			// Temporary implement
+			col colm1 = file1.getColumn();
+			col colm2 = file2.getColumn();
+			sort(colm1.d.begin(),colm1.d.end(),ccompare(2));
+			sort(colm2.d.begin(),colm2.d.end(),ccompare(2));
+
+			do{
+				do{
+					cout << "Case-Sensitive (0 => Yes, 1 => No, -1 => Exit): ";
+					cin >> caseS;
+				}while(caseS!=0 && caseS!=1 && caseS!=-1);
+				if(caseS==-1){
+					break;
+				}
+				int flag=1;
+				if(file1.totalColumn() == file2.totalColumn()){
+					for(int i=0;i<file1.totalColumn();i++){
+						if(CSV::toLower(colm1.d[i],caseS)!=CSV::toLower(colm2.d[i],caseS)){
+							flag = 0;						
+						}
+					}
+				}else{
+					flag = 0;
+				}
+
+				if(flag){
+					cout << "Hurrey! Same Structure" <<endl;				
+				}else{
+					cout << "Oops! Not Same Structure" <<endl;
+				}
+
+			}while(caseS!=-1);
 		break;
 	}
 return 0;

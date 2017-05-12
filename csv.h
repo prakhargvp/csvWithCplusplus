@@ -9,6 +9,29 @@ using namespace std;
 struct col{
 	vector<string> d;
 };
+struct ccompare{
+	ccompare(int sType){
+		this->sType = sType;
+	}
+	bool operator () (string lhs, string rhs){
+		string str1,str2;
+		str1 = lhs;
+		str2 = rhs;
+		// 0 => int
+		// 1 => Ascii-case sensitive
+		// 2 => Ascii-case in-sensiti
+		if(sType==0){
+			return (stoi)(str1) < stoi(str2);
+		}else if(sType==2){
+			std::transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+			std::transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
+			return str1 < str2;
+		}else {
+			return str1 < str2;
+		}
+	}
+	int sType;
+};
 struct acompare{
 	acompare(int colNum,int sType){
 		this->colNum = colNum;
@@ -62,8 +85,10 @@ public:
 	// return records
 	vector<col> read(int );
 	int totalColumn();
-	// getColumn : Get the Column Name
-	void getColumn();
+	// getColumn : return the sttructur
+	col getColumn();
+	// printColumn : Get the Column Name
+	void printColumn();
 	// addColumn : Add Column in CSV File
 	// return the Column index
 	int addColumn(string colName);
@@ -71,6 +96,19 @@ public:
 	void write(string name="");
 	// sort
 	void sort(int colNum,int sortType);	
+	// compare : return true or false
+	// true if same structure
+	// false if not same structure
+	// compareStructure
+	/*
+	int compStruct(const CSV& obj1,int caseSens);
+	*/
+	static string toLower(string str,int convert=1){
+		if(convert){
+			transform(str.begin(), str.end(), str.begin(), ::tolower);
+		}
+		return str;
+	}
 	void print();
 	~CSV(){
 		close();
@@ -158,8 +196,12 @@ public:
 	int CSV::totalColumn(){
 		return columns;
 	}
-	// getColumn : Get the Column Name
-	void CSV::getColumn(){
+	// getColumn : return the sttructur
+	col CSV::getColumn(){
+		return data[0];
+	}
+	// printColumn : Get the Column Name
+	void CSV::printColumn(){
 		if(records>-1){
 			for(int  i=0;i<data[0].d.size();i++){
 				cout <<"| "<< data[0].d[i]<<" ";
@@ -221,3 +263,9 @@ public:
 		cout << endl;
 	  }
 	}
+	// compareStructure
+	/*
+	int compStruct(const CSV& obj1,int caseSens=0){
+		return 1;
+	}
+	*/
