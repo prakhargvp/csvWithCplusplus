@@ -103,7 +103,13 @@ public:
 	/*
 	int compStruct(const CSV& obj1,int caseSens);
 	*/
+	void setData(vector <col>);
+	int getIndexNo(string);
 	int IsDuplicate(int);
+	int removeDuplicate(int);
+	int removeDuplicateCol(int colNo,int caseS);
+	// getData
+	vector <col> getData(int);
 	static string toLower(string str,int convert=1){
 		if(convert){
 			transform(str.begin(), str.end(), str.begin(), ::tolower);
@@ -252,7 +258,7 @@ public:
 		}
 	}	
 	// sort
-	void CSV::sort(int colNum=0, int sortType=0){
+	void CSV::sort(int colNum=0, int sortType=1){
 		std::sort(data.begin()+1,data.end(),acompare(colNum,sortType));
 
 	}
@@ -286,4 +292,55 @@ public:
 		}
 		return flag;
 	}
-	
+	int CSV::removeDuplicate(int caseS=0){
+		int flag = 0;
+		int i=1;
+		while(i<data.size()-1){
+			int tcount = 0;
+			for(int j=0;j<data[i].d.size();j++){
+				if(toLower(data[i].d[j],caseS)==toLower(data[i+1].d[j],caseS)){
+					tcount++;
+				}
+			}
+			if(tcount == data[i].d.size()){
+				data.erase(data.begin() + i + 1);
+				flag++;
+			}else{
+				i++;
+			}
+		}
+		return flag;
+	}
+	int CSV::removeDuplicateCol(int colNo,int caseS=0){
+		int flag = 0;
+		int i=1;
+		while(i<data.size()-1){
+			int tcount = 0;
+
+			if(toLower(data[i].d[colNo],caseS)==toLower(data[i+1].d[colNo],caseS)){
+				tcount++;
+			}
+			if(tcount == 1){
+				data.erase(data.begin() + i + 1);
+				flag++;
+			}else{
+				i++;
+			}
+		}
+		return flag;
+	}
+	int CSV::getIndexNo(string str){
+		int index=-1;
+		for(int i=0;i<columns;i++){
+			if(toLower(str)==toLower(data[0].d[i])){
+				index = i;
+			}
+		}
+		return index;
+	}
+	vector <col> CSV::getData(int recordno=-1){
+		return data;
+	}
+	void CSV::setData(vector <col> d){
+		data = d;
+	}
