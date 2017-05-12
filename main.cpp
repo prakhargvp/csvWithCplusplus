@@ -11,8 +11,8 @@ int main(){
 	string col1,col2;
 	vector <col> d1,d2,d3;
 	string str;
-	// Menus
 	do{
+		// Menus
 		cout <<"Menus : "<<endl;
 		cout <<"1. Create"<<endl;
 		cout <<"2. IsSameStructure"<<endl;
@@ -25,12 +25,12 @@ int main(){
 		cout <<"Enter the Choice : ";
 		cin >> option;
 		switch(option){
-
 			case 1:
 				file = inputFile();
 				// If user select to exit
-				if(file=="")
+				if(file==""){
 					break;
+				}
 				// Opent the FIle
 				if(!file1.open(file)){
 					file1.error();
@@ -44,7 +44,6 @@ int main(){
 					// Display Columns in DataSet = Columns in File + Other Added
 					cout << "Columns : ";
 					file1.printColumn();
-
 					cout << "Enter Column Name (-1 => exit): ";
 					cin >> colName;
 					if(colName!="-1"){
@@ -54,9 +53,11 @@ int main(){
 				int isSave;
 				cout << "Press 1 to save file 0 to exit : ";
 				cin >> isSave;
+				isSave=checkSave(isSave);
 				if(isSave==1){
 					cout << "Press 1. To save in existing one; 2. To Save in new one : ";
 					cin >> isSave;
+					isSave=Save2(isSave);
 					if(isSave==2){
 						string name;
 						cout << "Enter file name (with .csv extension) : ";
@@ -78,31 +79,32 @@ int main(){
 				flag = checkSameStructure(file1,file2);
 				if(flag){
 					cout << "Hurrey! Same Structure" <<endl;				
-				}else{
+				}
+				else if(flag=-1);
+				else{
 					cout << "Oops! Not Same Structure" <<endl;
 				}			
 				break;
 
 			case 3:
 				// Check is duplicate
-				file =  inputFile();
+				file=inputFile();
 				file1.open(file);
 				file1.read();
 				do{
 					cout << "Case-Sensitive (0 => Yes, 1 => No, -1 => Exit): ";
 					cin >> caseS;
+					caseS=checkcaseS(caseS);
 				}while(caseS!=1 && caseS!=0 && caseS!=-1);
 				if(caseS==-1){
 					break;
 				}
 				file1.sort();
 				// Check duplicate info
-				// 0 show does not have duplicate
-				// 
-
-					int dupInfo;
-					dupInfo = file1.IsDuplicate(caseS);
-					cout << "Duplicate Found : "<<dupInfo<<endl;
+				// Show does not have duplicate
+				int dupInfo;
+				dupInfo = file1.IsDuplicate(caseS);
+				cout << "Duplicate Found : "<<dupInfo<<endl;
 			break;
 
 			case 4:		
@@ -113,23 +115,22 @@ int main(){
 				do{
 					cout << "Case-Sensitive (0 => Yes, 1 => No, -1 => Exit): ";
 					cin >> caseS;
+					caseS=checkcaseS(caseS);
 				}while(caseS!=1 && caseS!=0 && caseS!=-1);
-				if(caseS==-1){
-					break;
-				}
+				if(caseS==-1){  break;  }
 				file1.sort();
 				// Check duplicate info
 				// 0 show does not have duplicate
-				// 
-
 				dupInfo = file1.removeDuplicate(caseS);
 				cout << "Duplicate Found and Removed : "<<dupInfo<<endl;
 
 				cout << "Press 1 to save file 0 to exit : ";
 				cin >> isSave;
+				isSave=checkSave(isSave);
 				if(isSave==1){
 					cout << "Press 1. To save in existing one; 2. To Save in new one : ";
 					cin >> isSave;
+					isSave=Save2(isSave);
 					if(isSave==2){
 						string name;
 						cout << "Enter file name (with .csv extension) : ";
@@ -170,6 +171,7 @@ int main(){
 					do{
 						cout << "Enter the Sort type (0 => int , 1 => string sensitive , 2 => string in-sensitive) : ";
 						cin >> sortType;
+						//sortType=checkSortType(sortType);
 					}while(sortType!=0 && sortType!=1 && sortType!=2 && sortType!=-1);
 
 					file1.sort(colNum,sortType);
