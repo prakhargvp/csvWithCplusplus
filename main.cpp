@@ -22,8 +22,8 @@ int main(){
 	cout <<"4. RemoveDuplicate"<<endl;
 	cout <<"5. sort"<<endl;
 	cout <<"6. union"<<endl;
-	cout <<"7. intersection"<<endl;
-	cout <<"8. Exit"<<endl;
+	//cout <<"7. intersection"<<endl;
+	cout <<"7. Exit"<<endl;
 	cout <<"Enter the Choice : ";
 	cin >> option;
 	switch(option){
@@ -254,8 +254,9 @@ int main(){
 			cout << "Oops! Not Same Structure" <<endl;
 		}			
 		break;
-
-
+		case 7: break;
+		default:
+			cout <<" Hurrey! No Work GO Away" << endl;
 
 	}
 return 0;
