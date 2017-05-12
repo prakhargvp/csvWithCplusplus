@@ -6,6 +6,7 @@ int main(){
 	int option;
 	string file,colName;
 	CSV file1,file2;
+	int caseS;
 	// Menus
 	cout <<"Menus : "<<endl;
 	cout <<"1. Add Column"<<endl;
@@ -97,10 +98,33 @@ int main(){
 					count++;
 				}while(colNum!=-1 || count<=tColumn);
 		break;
+
+		case 3:
+		
+		// Check is duplicate
+		file =  inputFile();
+		file1.open(file);
+		file1.read();
+		do{
+			cout << "Case-Sensitive (0 => Yes, 1 => No, -1 => Exit): ";
+			cin >> caseS;
+		}while(caseS!=1 && caseS!=0 && caseS!=-1);
+		if(caseS==-1){
+			break;
+		}
+		file1.sort();
+		// Check duplicate info
+		// 0 show does not have duplicate
+		// 
+
+			int dupInfo;
+			dupInfo = file1.IsDuplicate(caseS);
+			cout << "Duplicate Found : "<<dupInfo<<endl;
+		break;
+
 		case 2:
 			// IsSameStructure
 			string f1,f2;
-			int caseS;
 
 			f1 = inputFile();
 			f2 = inputFile();
@@ -143,6 +167,9 @@ int main(){
 
 			}while(caseS!=-1);
 		break;
+
+
+
 	}
 return 0;
 }

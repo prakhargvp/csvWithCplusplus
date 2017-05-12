@@ -103,6 +103,7 @@ public:
 	/*
 	int compStruct(const CSV& obj1,int caseSens);
 	*/
+	int IsDuplicate(int);
 	static string toLower(string str,int convert=1){
 		if(convert){
 			transform(str.begin(), str.end(), str.begin(), ::tolower);
@@ -251,7 +252,7 @@ public:
 		}
 	}	
 	// sort
-	void CSV::sort(int colNum, int sortType){
+	void CSV::sort(int colNum=0, int sortType=0){
 		std::sort(data.begin()+1,data.end(),acompare(colNum,sortType));
 
 	}
@@ -269,3 +270,20 @@ public:
 		return 1;
 	}
 	*/
+	int CSV::IsDuplicate(int caseS=0){
+		int flag = 0;
+
+		for(int i=1;i<records;i++){
+			int tcount = 0;
+			for(int j=0;j<data[i].d.size();j++){
+				if(toLower(data[i].d[j],caseS)==toLower(data[i+1].d[j],caseS)){
+					tcount++;
+				}
+			}
+			if(tcount == data[i].d.size()){
+				flag++;
+			}
+		}
+		return flag;
+	}
+	
