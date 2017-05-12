@@ -5,10 +5,13 @@
 #include <errno.h>
 #include <cstring>
 #include <string>  
+
 using namespace std;
+
 struct col{
 	vector<string> d;
 };
+
 struct ccompare{
 	ccompare(int sType){
 		this->sType = sType;
@@ -32,12 +35,13 @@ struct ccompare{
 	}
 	int sType;
 };
+
 struct acompare{
 	acompare(int colNum,int sType){
 		this->colNum = colNum;
 		this->sType = sType;
 	}
-	bool operator () (col lhs, col rhs){
+	bool operator()(col lhs, col rhs){
 		string str1,str2;
 		str1 = lhs.d[colNum];
 		str2 = rhs.d[colNum];
@@ -56,6 +60,7 @@ struct acompare{
 	}
 	int colNum,sType;
 };
+
 //bool acompare(col lhs, col rhs) { return lhs.d[0] < rhs.d[0]; }
 class CSV{
 	fstream file;
@@ -63,39 +68,52 @@ class CSV{
 	int records;
 	int columns;
 	vector <col> data;
-public:
+    public:
 	CSV(string name=""){
 		records = -1;
 		fname = name;
 		columns = 0;
 	}
+
 	// Utility Function
 	// isExist : To check if file already exist or not
-	static bool isExist(string name);	
+	static bool isExist(string name);
+	
 	// error : Display the Standard error
 	void error();
+
 	void close();
+
 	// open : TO open the given file
 	// return true if all going well
 	// return false if any error
 	bool open(string name);
+
 	// getRecord : return total records
 	int getRecord();	
+
 	// read : to read the file and create a dataset
 	// return records
 	vector<col> read(int );
+
 	int totalColumn();
+
 	// getColumn : return the sttructur
 	col getColumn();
+
 	// printColumn : Get the Column Name
 	void printColumn();
+
 	// addColumn : Add Column in CSV File
 	// return the Column index
 	int addColumn(string colName);
+
 	// write : write the dataset in file
 	void write(string name="");
+
 	// sort
-	void sort(int colNum,int sortType);	
+	void sort(int colNum,int sortType);
+	
 	// compare : return true or false
 	// true if same structure
 	// false if not same structure
@@ -104,23 +122,31 @@ public:
 	int compStruct(const CSV& obj1,int caseSens);
 	*/
 	void setData(vector <col>);
+
 	int getIndexNo(string);
+
 	int IsDuplicate(int);
+
 	int removeDuplicate(int);
+
 	int removeDuplicateCol(int colNo,int caseS);
+
 	// getData
 	vector <col> getData(int);
+
 	static string toLower(string str,int convert=1){
 		if(convert){
 			transform(str.begin(), str.end(), str.begin(), ::tolower);
 		}
 		return str;
 	}
+
 	void print();
 	~CSV(){
 		close();
 	}	
 };
+
 	// Utility Function
 	// isExist : To check if file already exist or not
 	bool CSV::isExist(string name){
@@ -132,13 +158,16 @@ public:
 			return false;
 		}		
 	}
+
 	// error : Display the Standard error
 	void CSV::error(){
 		cerr << "Error: " << strerror(errno)<<endl;
 	}
+
 	void CSV::close(){
 		file.close();	
 	}
+
 	// open : TO open the given file
 	// return true if all going well
 	// return false if any error
@@ -159,10 +188,12 @@ public:
 		}
 		return fStatus;
 	}
+
 	// getRecord : return total records
 	int CSV::getRecord(){
 		return records;
 	}	
+
 	// read : to read the file and create a dataset
 	// return records
 	vector<col> CSV::read(int rec=0){
@@ -173,7 +204,6 @@ public:
 	  	records = -1;
 	  	fetchAll = true;
 	  }
-	  //
 	  file.seekg(0,ios::beg);
 	  while (!file.eof() && (fetchAll || i<rec))
 	  {
@@ -200,13 +230,16 @@ public:
 	  }
 	  return data;
 	}
+
 	int CSV::totalColumn(){
 		return columns;
 	}
+
 	// getColumn : return the sttructur
 	col CSV::getColumn(){
 		return data[0];
 	}
+
 	// printColumn : Get the Column Name
 	void CSV::printColumn(){
 		if(records>-1){
@@ -217,6 +250,7 @@ public:
 		}
 		cout<<endl;
 	}
+
 	// addColumn : Add Column in CSV File
 	// return the Column index
 	int CSV::addColumn(string colName){
@@ -232,6 +266,7 @@ public:
 		data[0].d.push_back(colName);	
 		columns++;
 	}
+
 	// write : write the dataset in file
 	void CSV::write(string name){
 		if(name==""){
@@ -257,11 +292,13 @@ public:
 			error();
 		}
 	}	
+
 	// sort
 	void CSV::sort(int colNum=0, int sortType=1){
 		std::sort(data.begin()+1,data.end(),acompare(colNum,sortType));
 
 	}
+
 	void CSV::print(){
 	  for(int i=0;i<data.size();i++){
 		for(int j=0;j<data[i].d.size();j++){
@@ -270,12 +307,14 @@ public:
 		cout << endl;
 	  }
 	}
+
 	// compareStructure
 	/*
 	int compStruct(const CSV& obj1,int caseSens=0){
 		return 1;
 	}
 	*/
+
 	int CSV::IsDuplicate(int caseS=0){
 		int flag = 0;
 
@@ -292,6 +331,7 @@ public:
 		}
 		return flag;
 	}
+
 	int CSV::removeDuplicate(int caseS=0){
 		int flag = 0;
 		int i=1;
@@ -311,6 +351,7 @@ public:
 		}
 		return flag;
 	}
+
 	int CSV::removeDuplicateCol(int colNo,int caseS=0){
 		int flag = 0;
 		int i=1;
@@ -329,6 +370,7 @@ public:
 		}
 		return flag;
 	}
+
 	int CSV::getIndexNo(string str){
 		int index=-1;
 		for(int i=0;i<columns;i++){
@@ -338,9 +380,11 @@ public:
 		}
 		return index;
 	}
+
 	vector <col> CSV::getData(int recordno=-1){
 		return data;
 	}
+
 	void CSV::setData(vector <col> d){
 		data = d;
 	}
