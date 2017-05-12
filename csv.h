@@ -19,10 +19,15 @@ struct acompare{
 		str1 = lhs.d[colNum];
 		str2 = rhs.d[colNum];
 		// 0 => int
-		// 1 => Ascii
+		// 1 => Ascii-case sensitive
+		// 2 => Ascii-case in-sensiti
 		if(sType==0){
-			return stoi(str1) < stoi(str2);
-		}else{
+			return (stoi)(str1) < stoi(str2);
+		}else if(sType==2){
+			std::transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+			std::transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
+			return str1 < str2;
+		}else {
 			return str1 < str2;
 		}
 	}

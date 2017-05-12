@@ -92,14 +92,14 @@ int main(){
 					}else{
 						int sortType;
 						do{
-							cout << "Enter the Sort type (0 => int , 1 => string) : ";
+							cout << "Enter the Sort type (0 => int , 1 => string sensitive , 2 => string in-sensitive) : ";
 							cin >> sortType;
-						}while(sortType!=0 && sortType!=1);
+						}while(sortType!=0 && sortType!=1 && sortType!=2 && sortType!=-1);
 						file1.sort(colNum,sortType);
 						file1.print();
 					}
 					count++;
-				}while(colNum!=-1 && count<=totalColumn);
+				}while(colNum!=-1 || count<=totalColumn);
 		break;
 	}
 return 0;
