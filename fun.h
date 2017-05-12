@@ -1,3 +1,4 @@
+
 string inputFile(){
 	int errChoice=1;
 	string file;
@@ -29,33 +30,31 @@ string inputFile(){
 	}
 return file;
 }
+
 int checkSameStructure(CSV &file1,CSV &file2){
 	int caseS,flag=0;
-
-			file1.read();
-			file2.read();
-			cout << "File1 Columns : "; file1.printColumn();		
-			cout << "File2 Columns : "; file2.printColumn();
-			// Temporary implement
-			col colm1 = file1.getColumn();
-			col colm2 = file2.getColumn();
-			sort(colm1.d.begin(),colm1.d.end(),ccompare(2));
-			sort(colm2.d.begin(),colm2.d.end(),ccompare(2));
-				do{
-					cout << "Case-Sensitive (0 => Yes, 1 => No, -1 => Exit): ";
-					cin >> caseS;
-				}while((caseS!=0) && (caseS!=1) && caseS!=-1);
-
-				flag=1;
-				if(file1.totalColumn() == file2.totalColumn()){
-					for(int i=0;i<file1.totalColumn();i++){
-						if(CSV::toLower(colm1.d[i],caseS)!=CSV::toLower(colm2.d[i],caseS)){
-							flag = 0;						
-						}
-					}
-				}else{
-					flag = 0;
+		file1.read();
+		file2.read();
+		cout << "File1 Columns : "; file1.printColumn();		
+		cout << "File2 Columns : "; file2.printColumn();
+		// Temporary implement
+		col colm1 = file1.getColumn();
+		col colm2 = file2.getColumn();
+		sort(colm1.d.begin(),colm1.d.end(),ccompare(2));
+		sort(colm2.d.begin(),colm2.d.end(),ccompare(2));
+		do{
+			cout << "Case-Sensitive (0 => Yes, 1 => No, -1 => Exit): ";
+			cin >> caseS;
+		}while((caseS!=0) && (caseS!=1) && caseS!=-1);
+		flag=1;
+		if(file1.totalColumn() == file2.totalColumn()){
+			for(int i=0;i<file1.totalColumn();i++){
+				if(CSV::toLower(colm1.d[i],caseS)!=CSV::toLower(colm2.d[i],caseS)){
+					flag = 0;						
 				}
+			}
+		}else{
+			flag = 0;
+		}
 	return flag;
-
 }
