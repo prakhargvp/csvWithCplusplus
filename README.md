@@ -31,10 +31,4 @@ Running :
             •	First set the path of IDE.
             •	Open Command Prompt and type $g++ -std=c++11 <Program_name.cpp> -o <exe_filename>
             •	<exe_filename>
-            
-Contributors :
 
-     S.No.         NAME           COURSE     BRANCH   SEMESTER     SECTION
-      1.      Prakhar Agrawal     B-tech      CSE        4            BDA
-      2.      Rishabh Gupta       B-tech      CSE        4            C
-      3.      Manish Kumar Rai    B-tech      CSE        4            BDA
