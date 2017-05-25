@@ -1,17 +1,16 @@
 # csvWithC++
 
 Getting Started :
-
-    Work on [CSV](https://prakhargvp.github.io/csvWithCplusplus/) File using C++
-
-    This project aims to how to create and work on csv file using C++.
-      •	Create CSV file
-      •	Check for SAME STRUCTURE
-      •	Check for Duplicate entries
-      •	Remove duplicate entries if exsist
-      •	Sort CSV file on the basis of column
-      •	Union of two CSV files if they have same structure
-      •	Intersection of two CSV files if they have same structure
+   
+        Work on CSV File using C++
+        This project aims to how to create and work on csv file using C++.
+          •	Create CSV file
+          •	Check for SAME STRUCTURE
+          •	Check for Duplicate entries
+          •	Remove duplicate entries if exsist
+          •	Sort CSV file on the basis of column
+          •	Union of two CSV files if they have same structure
+          •	Intersection of two CSV files if they have same structure
 
 Prerequisites :
 
