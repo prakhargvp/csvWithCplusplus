@@ -2,7 +2,7 @@
 
 Getting Started :
 
-    Work on [CSV](https://github.com/prakhargvp/csvWithCplusplus/wiki/Basic-Information) File using C++
+    Work on [CSV](https://prakhargvp.github.io/csvWithCplusplus/) File using C++
 
     This project aims to how to create and work on csv file using C++.
       •	Create CSV file
